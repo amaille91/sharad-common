@@ -3,7 +3,7 @@ cabal-version:       2.4
 -- init'.  For further documentation, see
 -- http://haskell.org/cabal/users-guide/
 
-name:                sharad-model
+name:                sharad-common
 version:             0.1.0.0
 -- synopsis:
 -- description:
@@ -24,6 +24,7 @@ library
   build-depends:
       base ^>=4.12.0.0
     , aeson
+    , uuid
     , base64-bytestring
     , bytestring
     , SHA

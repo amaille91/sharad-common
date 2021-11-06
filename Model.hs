@@ -7,12 +7,16 @@ module Model (
   , ChecklistContent(..), ChecklistItem(..)
   , Content
   , Identifiable(..), hash
+  , mkIdentifiable
   ) where
 
 
+import Control.Monad.IO.Class (liftIO)
 import           Data.Aeson
 import qualified Data.ByteString.Base64.Lazy as Base64 (encode)
 import           Data.ByteString.Lazy.Char8  as BL
+import qualified Data.UUID.V4               as UUID (nextRandom)
+import qualified Data.UUID                  as UUID (toString)
 import           Data.Digest.Pure.SHA        (bytestringDigest, sha256)
 import           GHC.Generics                (Generic)
 
@@ -37,6 +41,11 @@ instance Content a => FromJSON (Identifiable a) where
   parseJSON = withObject "Identifiable" $ \value -> Identifiable
     <$> value .: "storageId"
     <*> value .: "content"
+
+mkIdentifiable :: (Content a) => a -> IO (Identifiable a)
+mkIdentifiable content = do
+    uuid <- liftIO $ fmap UUID.toString UUID.nextRandom
+    return $ Identifiable (StorageId { id = uuid, version = hash content }) content
 
 -- ===================== Note =============================================
 
