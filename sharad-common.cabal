@@ -4,7 +4,7 @@ cabal-version:       2.4
 -- http://haskell.org/cabal/users-guide/
 
 name:                sharad-common
-version:             0.1.0.0
+version:             0.2.0.0
 -- synopsis:
 -- description:
 -- bug-reports:
